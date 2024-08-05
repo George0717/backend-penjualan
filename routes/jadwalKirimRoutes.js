@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const JadwalKirim = require('../models/JadwalKirim');
+const JadwalKirim = require('../models/jadwalKirim');
 
 // Create 
 router.post('/', async (req, res) => {
