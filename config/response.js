@@ -1,6 +1,6 @@
 const response = (statusCode, data, message, res) => {
     res.status(statusCode).json({
-      menuResto: {
+      penjualanApp: {
         status_Code: statusCode,
         data: data,
         message: message,
