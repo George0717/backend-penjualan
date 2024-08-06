@@ -23,6 +23,7 @@ const SalesOrderSchema = new mongoose.Schema({
     },
   ],
   totalBayar: { type: Number, required: true },
+  tipePembayaran: {type: String, required: true},
   jadwalPembayaran: {
     type: Date,
     required: true,

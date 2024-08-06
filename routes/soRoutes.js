@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
         uangMuka: req.body.uangMuka,
         ppn: req.body.ppn,
         totalBayar: req.body.totalBayar,
+        tipePembayaran: req.body.tipePembayaran,
         jadwalPembayaran: req.body.jadwalPembayaran,
     });
 
@@ -52,6 +53,7 @@ router.put('/:salesOrderID', async (req, res) => {
         uangMuka: req.body.uangMuka,
         ppn: req.body.ppn,
         totalBayar: req.body.totalBayar,
+        tipePembayaran: req.body.tipePembayaran,
         jadwalPembayaran: req.body.jadwalPembayaran,
     };
 
