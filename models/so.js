@@ -24,8 +24,8 @@ const SalesOrderSchema = new mongoose.Schema({
   ],
   totalBayar: { type: Number, required: true },
   jadwalPembayaran: {
-    type: String,
-    enum: ["Tunai", "Debit/Kredit", "Transfer/30 Hari setelah barang diterima"],
+    type: Date,
+    required: true,
   },
 });
 
