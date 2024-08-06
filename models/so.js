@@ -16,18 +16,14 @@ const SalesOrderSchema = new mongoose.Schema({
     },
   ],
   subTotal: {
-    {
-      diskon: { type: Number, default: 0 },
-      uangMuka: { type: Number, default: 0 },
-      ppn: { type: Number, default: 0 },
-    },
+    diskon: { type: Number, default: 0 },
+    uangMuka: { type: Number, default: 0 },
+    ppn: { type: Number, default: 0 },
   },
   totalBayar: { type: Number, required: true },
-  tipePembayaran: {type: String, required: true},
-  jadwalPembayaran: {
-    type: Date,
-    required: true,
-  },
+  tipePembayaran: { type: String },
+  jadwalPembayaran: { type: Date },
 });
+
 
 module.exports = mongoose.model("SalesOrder", SalesOrderSchema);
