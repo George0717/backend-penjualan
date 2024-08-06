@@ -15,13 +15,13 @@ const SalesOrderSchema = new mongoose.Schema({
       total: { type: Number, required: true },
     },
   ],
-  subTotal: [
+  subTotal: {
     {
       diskon: { type: Number, default: 0 },
       uangMuka: { type: Number, default: 0 },
       ppn: { type: Number, default: 0 },
     },
-  ],
+  },
   totalBayar: { type: Number, required: true },
   tipePembayaran: {type: String, required: true},
   jadwalPembayaran: {
