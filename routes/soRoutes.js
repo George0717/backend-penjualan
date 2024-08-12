@@ -78,13 +78,16 @@ router.delete('/:salesOrderID', async (req, res) => {
 router.get('/last', async (req, res) => {
     try {
         const lastSalesOrder = await SalesOrder.findOne().sort({ _id: -1 }).exec();
+        console.log("Last Sales Order:", lastSalesOrder); // Log data yang diambil
         if (!lastSalesOrder) {
             return response(200, { nomorSO: "SOSPA00" }, "No Sales Order found", res);
         }
         response(200, { nomorSO: lastSalesOrder.nomorSO }, "Berhasil", res);
     } catch (error) {
+        console.error("Error fetching last Sales Order:", error);
         res.json({ message: error.message });
     }
 });
+
 
 module.exports = router;
