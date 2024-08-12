@@ -83,16 +83,24 @@ router.delete('/:salesOrderID', async (req, res) => {
 
 router.get('/last', async (req, res) => {
     try {
-        const lastSalesOrder = await SalesOrder.findOne().sort({ nomorSO: -1 }).exec();
-        if (!lastSalesOrder) {
+        const lastSalesOrder = await SalesOrder.find()
+            .sort({ nomorSO: -1 })
+            .limit(1)
+            .exec();
+
+        if (lastSalesOrder.length === 0) {
             return response(200, { nomorSO: "SOSPA00" }, "No Sales Order found", res);
         }
-        response(200, { nomorSO: lastSalesOrder.nomorSO }, "Berhasil", res);
+
+        const lastSoNumber = lastSalesOrder[0].nomorSO;
+        const numberPart = parseInt(lastSoNumber.replace("SOSPA", ""), 10) || 0;
+        const newSoNumber = `SOSPA${(numberPart + 1).toString().padStart(2, "0")}`;
+
+        response(200, { nomorSO: newSoNumber }, "Berhasil", res);
     } catch (error) {
         res.json({ message: error.message });
     }
 });
-
 
 
 module.exports = router;
