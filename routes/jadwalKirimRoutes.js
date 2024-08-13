@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const JadwalKirim = require('../models/jadwalKirim');
 
-// Create 
+// Create
 router.post('/', async (req, res) => {
     const jadwalKirimPost = new JadwalKirim({
         pilihCustomer: req.body.pilihCustomer,
@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 
     try {
         const jadwalKirim = await jadwalKirimPost.save();
-        res.status(201).json({ message: "berhasil", data: jadwalKirim });
+        res.status(201).json({ message: "Berhasil", data: jadwalKirim });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const jadwalKirims = await JadwalKirim.find().populate('pilihNomorSo');
-        res.status(200).json({ message: "berhasil", data: jadwalKirims });
+        res.status(200).json({ message: "Berhasil", data: jadwalKirims });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -37,8 +37,8 @@ router.put('/:jadwalKirimID', async (req, res) => {
     };
 
     try {
-        const jadwalKirim = await JadwalKirim.updateOne({ _id: req.params.jadwalKirimID }, data);
-        res.status(200).json({ message: "berhasil", data: jadwalKirim });
+        const jadwalKirim = await JadwalKirim.findByIdAndUpdate(req.params.jadwalKirimID, data, { new: true });
+        res.status(200).json({ message: "Berhasil", data: jadwalKirim });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -47,8 +47,8 @@ router.put('/:jadwalKirimID', async (req, res) => {
 // Delete
 router.delete('/:jadwalKirimID', async (req, res) => {
     try {
-        const jadwalKirim = await JadwalKirim.deleteOne({ _id: req.params.jadwalKirimID });
-        res.status(200).json({ message: "berhasil", data: jadwalKirim });
+        const jadwalKirim = await JadwalKirim.findByIdAndDelete(req.params.jadwalKirimID);
+        res.status(200).json({ message: "Berhasil", data: jadwalKirim });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
