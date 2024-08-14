@@ -3,7 +3,7 @@ const router = express.Router();
 const response = require('../config/response'); // Assuming this is your custom response handler
 const SuratJalan = require('../models/suratJalan');
 
-// Create 
+// Create
 router.post('/', async (req, res) => {
     try {
         // Generate the new Surat Jalan number
@@ -24,8 +24,9 @@ router.post('/', async (req, res) => {
         });
 
         const suratJalan = await suratJalanPost.save();
-        response(201, suratJalan, "berhasil", res);
+        response(201, suratJalan, "Berhasil", res);
     } catch (error) {
+        console.error('Error creating Surat Jalan:', error); // Enhanced error logging
         response(500, null, error.message, res);
     }
 });
@@ -34,8 +35,9 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const suratJalans = await SuratJalan.find().populate('namaCustomer');
-        response(200, suratJalans, "berhasil", res);
+        response(200, suratJalans, "Berhasil", res);
     } catch (error) {
+        console.error('Error fetching Surat Jalan:', error); // Enhanced error logging
         response(500, null, error.message, res);
     }
 });
@@ -53,9 +55,13 @@ router.put('/:suratJalanID', async (req, res) => {
     };
 
     try {
-        const suratJalan = await SuratJalan.updateOne({ _id: req.params.suratJalanID }, data);
-        response(200, suratJalan, "berhasil", res);
+        const suratJalan = await SuratJalan.findByIdAndUpdate(req.params.suratJalanID, data, { new: true });
+        if (!suratJalan) {
+            return response(404, null, "Surat Jalan not found", res);
+        }
+        response(200, suratJalan, "Berhasil", res);
     } catch (error) {
+        console.error('Error updating Surat Jalan:', error); // Enhanced error logging
         response(500, null, error.message, res);
     }
 });
@@ -63,9 +69,13 @@ router.put('/:suratJalanID', async (req, res) => {
 // Delete
 router.delete('/:suratJalanID', async (req, res) => {
     try {
-        const suratJalan = await SuratJalan.deleteOne({ _id: req.params.suratJalanID });
-        response(200, suratJalan, "berhasil", res);
+        const suratJalan = await SuratJalan.findByIdAndDelete(req.params.suratJalanID);
+        if (!suratJalan) {
+            return response(404, null, "Surat Jalan not found", res);
+        }
+        response(200, suratJalan, "Berhasil", res);
     } catch (error) {
+        console.error('Error deleting Surat Jalan:', error); // Enhanced error logging
         response(500, null, error.message, res);
     }
 });
@@ -88,6 +98,7 @@ router.get('/last', async (req, res) => {
 
         response(200, { noSuratJalan: newSuratNumber }, "Berhasil", res);
     } catch (error) {
+        console.error('Error fetching last Surat Jalan number:', error); // Enhanced error logging
         response(500, null, error.message, res);
     }
 });
