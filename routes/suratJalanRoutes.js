@@ -6,6 +6,13 @@ const SuratJalan = require('../models/suratJalan');
 // Create
 router.post('/', async (req, res) => {
     try {
+        // Validate incoming data
+        const { namaCustomer, alamatCustomer, namaPabrik, tanggalPengiriman, platAngkutan, namaStaff } = req.body;
+
+        if (!namaCustomer || !alamatCustomer || !namaPabrik || !tanggalPengiriman || !platAngkutan || !namaStaff) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+
         // Generate the new Surat Jalan number
         const lastSuratJalan = await SuratJalan.findOne().sort({ noSuratJalan: -1 }).exec();
         const lastSuratNumber = lastSuratJalan ? lastSuratJalan.noSuratJalan : "000000";
@@ -14,13 +21,13 @@ router.post('/', async (req, res) => {
 
         // Create new Surat Jalan document
         const suratJalanPost = new SuratJalan({
-            namaCustomer: req.body.namaCustomer,
-            alamatCustomer: req.body.alamatCustomer,
-            namaPabrik: req.body.namaPabrik,
+            namaCustomer,
+            alamatCustomer,
+            namaPabrik,
             noSuratJalan: newSuratNumber, // Use the new Surat Jalan number
-            tanggalPengiriman: req.body.tanggalPengiriman,
-            platAngkutan: req.body.platAngkutan,
-            namaStaff: req.body.namaStaff,
+            tanggalPengiriman,
+            platAngkutan,
+            namaStaff,
         });
 
         const suratJalan = await suratJalanPost.save();
@@ -30,6 +37,7 @@ router.post('/', async (req, res) => {
         response(500, null, error.message, res);
     }
 });
+
 
 // Read
 router.get('/', async (req, res) => {
